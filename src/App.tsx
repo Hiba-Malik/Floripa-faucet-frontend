@@ -13,7 +13,7 @@ const AZORE_NETWORK = {
     symbol: 'AZE-t',
     decimals: 18,
   },
-  rpcUrls: [process.env.REACT_APP_RPC_URL || 'http://172.16.255.103:11001'],
+  rpcUrls: [process.env.REACT_APP_RPC_URL || 'http://177.38.215.101:11001'],
   blockExplorerUrls: [process.env.REACT_APP_BLOCK_EXPLORER_URL || 'floripa.azorescan.com'],
 };
 
@@ -95,25 +95,23 @@ function App() {
     }
   };
 
-  const addNetworkToMetaMask = async () => {
-    if (typeof window.ethereum !== 'undefined') {
-      try {
-        await window.ethereum.request({
-          method: 'wallet_addEthereumChain',
-          params: [AZORE_NETWORK],
-        });
-        toast.success('Azore Testnet added to MetaMask!');
-      } catch (error: any) {
-        console.error('Error adding network:', error);
-        if (error.code === 4001) {
-          toast.error('User rejected the request');
-        } else {
-          toast.error('Failed to add network to MetaMask');
-        }
-      }
-    } else {
-      toast.error('MetaMask is not installed');
-    }
+  const showNetworkInstructions = () => {
+    const rpcUrl = process.env.REACT_APP_RPC_URL || 'http://177.38.215.101:11001';
+    const explorerUrl = process.env.REACT_APP_BLOCK_EXPLORER_URL || 'floripa.azorescan.com';
+    
+    toast((t) => (
+      <div style={{ textAlign: 'left', maxWidth: '300px' }}>
+        <strong>Add Network Manually:</strong><br/>
+        1. Open MetaMask → Settings → Networks<br/>
+        2. Click "Add Network"<br/>
+        3. Enter these details:<br/><br/>
+        <strong>Network Name:</strong> Floripa Testnet<br/>
+        <strong>RPC URL:</strong> {rpcUrl}<br/>
+        <strong>Chain ID:</strong> 88001<br/>
+        <strong>Symbol:</strong> AZE-t<br/>
+        <strong>Explorer:</strong> {explorerUrl}
+      </div>
+    ), { duration: 15000 });
   };
 
   const connectWallet = async () => {
@@ -254,15 +252,15 @@ function App() {
           {/* Main Actions */}
           <div className="actions">
             {!isConnected && (
-              <motion.button
-                className="btn btn-secondary"
-                onClick={addNetworkToMetaMask}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <Plus size={20} />
-                Add Network to MetaMask
-              </motion.button>
+                          <motion.button
+              className="btn btn-secondary"
+              onClick={showNetworkInstructions}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <Plus size={20} />
+              Add Network Instructions
+            </motion.button>
             )}
 
             <motion.button
