@@ -161,7 +161,7 @@ function App() {
         try {
       // Make sure the URL matches your backend port and endpoint
       const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
-      const response = await fetch(`${apiBaseUrl}/api/faucet/request`, {
+      const response = await fetch(`${apiBaseUrl}/faucet/request`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
