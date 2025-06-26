@@ -13,8 +13,8 @@ const AZORE_NETWORK = {
     symbol: 'AZE-t',
     decimals: 18,
   },
-  rpcUrls: [process.env.REACT_APP_RPC_URL || 'http://177.38.215.101:11001'],
-  blockExplorerUrls: [process.env.REACT_APP_BLOCK_EXPLORER_URL || 'floripa.azorescan.com'],
+  rpcUrls: [process.env.REACT_APP_RPC_URL || 'https://rpc-testnet.azore.technology'],
+  blockExplorerUrls: [process.env.REACT_APP_BLOCK_EXPLORER_URL || 'https://floripa.azorescan.com'],
 };
 
 
@@ -96,8 +96,8 @@ function App() {
   };
 
   const showNetworkInstructions = () => {
-    const rpcUrl = process.env.REACT_APP_RPC_URL || 'http://177.38.215.101:11001';
-    const explorerUrl = process.env.REACT_APP_BLOCK_EXPLORER_URL || 'floripa.azorescan.com';
+    const rpcUrl = process.env.REACT_APP_RPC_URL || 'https://rpc-testnet.azore.technology';
+    const explorerUrl = process.env.REACT_APP_BLOCK_EXPLORER_URL || 'https://floripa.azorescan.com';
     
     toast((t) => (
       <div style={{ textAlign: 'left', maxWidth: '300px' }}>
