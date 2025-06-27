@@ -301,16 +301,6 @@ function App() {
             )}
 
             <motion.button
-              className="btn btn-secondary"
-              onClick={showNetworkInstructions}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Info size={20} />
-              Show Instructions
-            </motion.button>
-
-            <motion.button
               className={`btn ${isConnected ? 'btn-success' : 'btn-primary'}`}
               onClick={connectWallet}
               disabled={isLoading || isConnected}
