@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import toast, { Toaster } from 'react-hot-toast';
-import { Wallet, Plus, CheckCircle, AlertCircle, Droplets } from 'lucide-react';
+import { Wallet,Info, Plus, CheckCircle, AlertCircle, Droplets } from 'lucide-react';
 import './App.css';
 
 // MetaMask network configuration for Azore testnet
 const AZORE_NETWORK = {
-  chainId: '0x15751',
-  chainName: 'Floripa Testnet',
+  chainId: '0x157C1',
+  chainName: 'Azore Testnet',
   nativeCurrency: {
     name: 'Azore Testnet',
     symbol: 'AZE-t',
@@ -95,6 +95,31 @@ function App() {
     }
   };
 
+  const addNetwork = async () => {
+    if (typeof window.ethereum === 'undefined') {
+      toast.error('MetaMask is not installed.');
+      return;
+    }
+
+    try {
+      await window.ethereum.request({
+        method: 'wallet_addEthereumChain',
+        params: [AZORE_NETWORK],
+      });
+      toast.success('Azore Testnet added to MetaMask!');
+    } catch (error: any) {
+      if (error.code === 4001) {
+        toast.error('User rejected the request to add the network.');
+      } else if (error.code === -32602) {
+        toast.error('Error with network parameters. Please check the configuration.');
+      }
+      else {
+        console.error('Failed to add network:', error);
+        toast.error('Failed to add the network.');
+      }
+    }
+  };
+
   const showNetworkInstructions = () => {
     const rpcUrl = process.env.REACT_APP_RPC_URL || 'https://rpc-testnet.azore.technology';
     const explorerUrl = process.env.REACT_APP_BLOCK_EXPLORER_URL || 'https://floripa.azorescan.com';
@@ -160,7 +185,7 @@ function App() {
     
         try {
       // Make sure the URL matches your backend port and endpoint
-      const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+      const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'https://faucet.azorescan.com/api';
       const response = await fetch(`${apiBaseUrl}/faucet/request`, {
         method: 'POST',
         headers: {
@@ -254,14 +279,24 @@ function App() {
             {!isConnected && (
                           <motion.button
               className="btn btn-secondary"
-              onClick={showNetworkInstructions}
+              onClick={addNetwork}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
               <Plus size={20} />
-              Add Network Instructions
+              Add to Metamask
             </motion.button>
             )}
+
+            <motion.button
+              className="btn btn-secondary"
+              onClick={showNetworkInstructions}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <Info size={20} />
+              Show Instructions
+            </motion.button>
 
             <motion.button
               className={`btn ${isConnected ? 'btn-success' : 'btn-primary'}`}
@@ -274,6 +309,7 @@ function App() {
               {isConnected ? 'Wallet Connected' : 'Connect Wallet'}
             </motion.button>
           </div>
+          
 
           {/* Connected Wallet Info */}
           <AnimatePresence>
