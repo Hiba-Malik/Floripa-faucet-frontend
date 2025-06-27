@@ -277,15 +277,27 @@ function App() {
           {/* Main Actions */}
           <div className="actions">
             {!isConnected && (
-                          <motion.button
-              className="btn btn-secondary"
-              onClick={addNetwork}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Plus size={20} />
-              Add to Metamask
-            </motion.button>
+              <motion.button
+                className="btn btn-secondary"
+                onClick={addNetwork}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Plus size={20} />
+                Add to Metamask
+              </motion.button>
+            )}
+
+            {!isConnected && (
+              <motion.button
+                className="btn btn-secondary"
+                onClick={showNetworkInstructions}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Info size={20} />
+                Show Instructions
+              </motion.button>
             )}
 
             <motion.button
